@@ -1,0 +1,17 @@
+version: '2'
+services:
+  FetchMail:
+    image: fetchmail-alpine:latest
+    container_name: fetchmail
+    environment:
+        TZ : "Europe/London"
+        RELAY_TO_EMAIL: ${RELAY_TO_EMAIL}
+        POLL_USER: ${POLL_USER}
+        POLL_PASSWORD: ${POLL_PASSWORD}
+        POLL_SERVER: ${POLL_SERVER}
+        POLL_SERVER_TYPE: ${POLL_SERVER_TYPE}
+        POLL_SERVER_PORT: ${POLL_SERVER_PORT}
+        SMTP_USER: ${SMTP_USER}
+        SMTP_PASSWORD: ${SMTP_PASSWORD}
+        SMTP_SERVER: ${SMTP_SERVER}
+        SMTP_SERVER_PORT: ${SMTP_SERVER_PORT}
