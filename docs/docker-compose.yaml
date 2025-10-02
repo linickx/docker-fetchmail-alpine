@@ -1,7 +1,7 @@
 version: '2'
 services:
   FetchMail:
-    image: fetchmail-alpine:latest
+    image: linickx/fetchmail-alpine:latest
     container_name: fetchmail
     environment:
         TZ : "Europe/London"
