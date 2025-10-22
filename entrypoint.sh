@@ -26,9 +26,6 @@ fi
 if [ -z "$POLL_SERVER_PORT" ]; then
   POLL_SERVER_PORT="993"
 fi
-if [ -z "$POLL_SERVER_KEEP" ]; then
-  POLL_SERVER_KEEP=TRUE
-fi
 
 # Poll interval default (in seconds) -- 15mins
 if [ -z "$POLL_INTERVAL" ]; then
