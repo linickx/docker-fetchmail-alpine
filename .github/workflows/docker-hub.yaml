@@ -15,16 +15,20 @@ jobs:
     - name: Test Env
       run: |
         echo ${{ env.RELEASE_VERSION }}
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile -t ${{ vars.DOCKERHUB_USERNAME }}/fetchmail-alpine:latest -t ${{ vars.DOCKERHUB_USERNAME }}/fetchmail-alpine:${{ env.RELEASE_VERSION }}
     - name: Login to DockerHub
       uses: docker/login-action@v2
       with:
         username: ${{ vars.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Push Docker image - Latest
-      run: docker push ${{ vars.DOCKERHUB_USERNAME }}/fetchmail-alpine:latest
-    - name: Push Docker image - Release
-      run: docker push ${{ vars.DOCKERHUB_USERNAME }}/fetchmail-alpine:${{ env.RELEASE_VERSION }}
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    - name: Build and push
+      uses: docker/build-push-action@v6
+      with:
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags:  ${{ vars.DOCKERHUB_USERNAME }}/fetchmail-alpine:latest, ${{ vars.DOCKERHUB_USERNAME }}/fetchmail-alpine:${{ env.RELEASE_VERSION }}
     - name: Logout from Docker Hub
       run: docker logout
