@@ -1,0 +1,21 @@
+name: Docker Image Build - No Push, No Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v4  
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    - name: Build and push
+      uses: docker/build-push-action@v6
+      with:
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags:  ${{ vars.DOCKERHUB_USERNAME }}/fetchmail-alpine:latest, ${{ vars.DOCKERHUB_USERNAME }}/fetchmail-alpine:test
